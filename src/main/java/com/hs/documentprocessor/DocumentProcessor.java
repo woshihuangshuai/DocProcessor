@@ -5,9 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import sun.rmi.runtime.Log;
 
-import javax.jnlp.FileOpenService;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -20,7 +18,8 @@ public class DocumentProcessor {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("user-agent= Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36");
         chromeOptions.addArguments("window-size=1440,1060");
-        chromeOptions.addArguments("headless");
+        chromeOptions.setHeadless(true);
+//        chromeOptions.addArguments("headless");
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
         WebDriver driver = new ChromeDriver(chromeOptions);
         TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
@@ -34,19 +33,19 @@ public class DocumentProcessor {
                     null,
                     false);
             Cookie cookie2 = new Cookie("CASTGC",
-                    "TGT-169370-QcPwCtgw7b4f5ldAeFBMeq3c9PcNpfAOi5c0d2TZVcY2rmTysO-cas",
+                    "TGT-58195-9b9eKJIZNuvFRerY6thoGMROEOIuM2bI3m4YIh09hvFDw5zKEV-cas",
                     "10.57.0.166",
                     "/cas/",
                     null,
                     false);
             Cookie cookie3 = new Cookie("JSESSIONID",
-                    "0B8FD6A60EF6BD5DC7E35FABC0862DD7",
+                    "A0204A72627134F12AC2E68B4899AE5A",
                     "10.57.0.166",
                     "/cas/",
                     null,
                     false);
             Cookie cookie4 = new Cookie("JSESSIONID",
-                    "F500439188D138FA885E30B2D3DE622D",
+                    "EF01F1A44765ADECCA5FFB08E459254E",
                     "10.57.0.166",
                     "/webrdp-web",
                     null,
@@ -90,7 +89,8 @@ public class DocumentProcessor {
                     fileOutputStream.write(imgByte, 0, imgByte.length);
                     driver.findElement(By.xpath("//*[@id=\"con_one_1\"]/li[1]/a")).click();
                     System.out.println("2. 进入公文页面");
-                    Thread.sleep(1000); // 等待页面动画
+                    // 等待页面动画
+                    Thread.sleep(1000);
                     List<String> tabs = new ArrayList<>(driver.getWindowHandles());
                     driver.switchTo().window(tabs.get(1));
                     System.out.println("3. 点击提交按钮");
@@ -98,7 +98,8 @@ public class DocumentProcessor {
                     driver.findElement(By.linkText("提交")).click();
                     System.out.println("4. 填写意见：阅");
                     wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"ieadList\"]")));
-                    Thread.sleep(1000); // 等待加载动画
+                    // 等待加载动画
+                    Thread.sleep(1000);
                     driver.findElement(By.xpath("//*[@id=\"handleWin\"]/div/div/div[2]/div/div[2]/div[1]/div[1]/table/tbody/tr[3]/td/table/tbody/tr[1]/td[2]/textarea")).sendKeys("阅");
                     Thread.sleep(500);
                     System.out.println("5. 提交意见");
@@ -133,7 +134,8 @@ public class DocumentProcessor {
         for (String tab : tabsToClose) {
             driver.switchTo().window(tab);
             driver.close();
-            Thread.sleep(500); // 等待标签页关闭
+            // 等待标签页关闭
+            Thread.sleep(500);
         }
         // 切换至第一个标签页
         driver.switchTo().window(firstTab);
